@@ -10,6 +10,7 @@ const operatorsBtns = document.querySelectorAll("[data-operator]");
 const equalBtn = document.querySelector("[data-equal]");
 const deleteBtn = document.querySelector("#deleteBtn");
 const clearBtn = document.querySelector("#clearBtn");
+const dotBtn = document.querySelector("[data-dot]");
 const lowerScreen = document.querySelector("#screenLower");
 const upperScreen = document.querySelector("#screenUpper");
 
@@ -102,6 +103,19 @@ const deleteLast = function () {
   }
 };
 
+/* add floating point if there wwasnt one before */
+
+const addFloat = function () {
+  if (!operandTwo && !operator && !operandOne.includes(".")) {
+    operandOne === "" ? (operandOne = "0.") : (operandOne += ".");
+    lowerScreen.textContent = operandOne;
+  }
+  if (operandOne && operator && !operandTwo.includes(".")) {
+    operandTwo === "" ? (operandTwo = "0.") : (operandTwo += ".");
+    lowerScreen.textContent = operandTwo;
+  }
+};
+
 /* does math computation depening on operator and displays result
 &#xf7; -> division sign | &#xd7; -> multiplication sign */
 
@@ -115,16 +129,16 @@ const getResult = function () {
   if (!operandOne || !operandTwo || !operator) {
     return;
   }
-
+  let tempNumber = operandOne;
   switch (operator) {
     case "+":
       operandOne = add(operandOne, operandTwo);
-      upperScreen.textContent = `${operandOne} ${operator} ${operandTwo} =`;
+      upperScreen.textContent = `${tempNumber} ${operator} ${operandTwo} =`;
       displayResult();
       break;
     case "-":
       operandOne = subtract(operandOne, operandTwo);
-      upperScreen.textContent = `${operandOne} ${operator} ${operandTwo} =`;
+      upperScreen.textContent = `${tempNumber} ${operator} ${operandTwo} =`;
       displayResult();
       break;
     case "/":
@@ -134,12 +148,12 @@ const getResult = function () {
         break;
       }
       operandOne = divide(operandOne, operandTwo);
-      upperScreen.innerHTML = `${operandOne} &#xf7; ${operandTwo} =`;
+      upperScreen.innerHTML = `${tempNumber} &#xf7; ${operandTwo} =`;
       displayResult();
       break;
     case "*":
       operandOne = multiply(operandOne, operandTwo);
-      upperScreen.innerHTML = `${operandOne} &#xd7; ${operandTwo} =`;
+      upperScreen.innerHTML = `${tempNumber} &#xd7; ${operandTwo} =`;
       displayResult();
       break;
   }
@@ -156,3 +170,4 @@ operatorsBtns.forEach((btn) => {
 equalBtn.addEventListener("click", getResult);
 deleteBtn.addEventListener("click", deleteLast);
 clearBtn.addEventListener("click", clearAll);
+dotBtn.addEventListener("click", addFloat);
