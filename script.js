@@ -3,7 +3,6 @@
 let operandOne = "";
 let operandTwo = "";
 let operator = "";
-let result;
 let symbol;
 
 const numbersBtns = document.querySelectorAll("[data-number]");
@@ -13,8 +12,6 @@ const deleteBtn = document.querySelector("#deleteBtn");
 const clearBtn = document.querySelector("#clearBtn");
 const lowerScreen = document.querySelector("#screenLower");
 const upperScreen = document.querySelector("#screenUpper");
-
-lowerScreen.textContent = result;
 
 /* math operations */
 const add = function (a, b) {
@@ -44,12 +41,22 @@ const getOperands = function (e) {
   setSymbol();
 
   if (!operator) {
-    operandOne += e.target.getAttribute("data-number");
-    lowerScreen.textContent = `${operandOne}`;
+    if (operandOne == "0") {
+      operandOne = e.target.getAttribute("data-number");
+      lowerScreen.textContent = `${operandOne}`;
+    } else {
+      operandOne += e.target.getAttribute("data-number");
+      lowerScreen.textContent = `${operandOne}`;
+    }
   } else {
-    operandTwo += e.target.getAttribute("data-number");
-    upperScreen.innerHTML = `${operandOne} ${symbol}`;
-    lowerScreen.textContent = `${operandTwo}`;
+    if (operandTwo == "0") {
+      operandTwo = e.target.getAttribute("data-number");
+      lowerScreen.textContent = `${operandTwo}`;
+    } else {
+      operandTwo += e.target.getAttribute("data-number");
+      upperScreen.innerHTML = `${operandOne} ${symbol}`;
+      lowerScreen.textContent = `${operandTwo}`;
+    }
   }
 };
 
@@ -76,7 +83,6 @@ const clearAll = function () {
   operandOne = "";
   operandTwo = "";
   operator = "";
-  result = "";
   lowerScreen.textContent = "";
   upperScreen.textContent = "";
 };
@@ -84,13 +90,13 @@ const clearAll = function () {
 const deleteLast = function () {
   let temp;
   if (!operandTwo && !operator) {
-    temp = operandOne.slice(0, operandOne.length - 1);
+    temp = String(operandOne).slice(0, operandOne.length - 1);
     operandOne = temp;
     lowerScreen.textContent = operandOne;
   }
 
   if (operandOne && operator) {
-    temp = operandTwo.slice(0, operandTwo.length - 1);
+    temp = String(operandTwo).slice(0, operandTwo.length - 1);
     operandTwo = temp;
     lowerScreen.textContent = operandTwo;
   }
@@ -100,7 +106,6 @@ const deleteLast = function () {
 &#xf7; -> division sign | &#xd7; -> multiplication sign */
 
 const displayResult = function () {
-  operandOne = result;
   lowerScreen.textContent = `${operandOne}`;
   operandTwo = "";
   operator = "";
@@ -113,12 +118,12 @@ const getResult = function () {
 
   switch (operator) {
     case "+":
-      result = add(operandOne, operandTwo);
+      operandOne = add(operandOne, operandTwo);
       upperScreen.textContent = `${operandOne} ${operator} ${operandTwo} =`;
       displayResult();
       break;
     case "-":
-      result = subtract(operandOne, operandTwo);
+      operandOne = subtract(operandOne, operandTwo);
       upperScreen.textContent = `${operandOne} ${operator} ${operandTwo} =`;
       displayResult();
       break;
@@ -128,12 +133,12 @@ const getResult = function () {
         operandTwo = "";
         break;
       }
-      result = divide(operandOne, operandTwo);
+      operandOne = divide(operandOne, operandTwo);
       upperScreen.innerHTML = `${operandOne} &#xf7; ${operandTwo} =`;
       displayResult();
       break;
     case "*":
-      result = multiply(operandOne, operandTwo);
+      operandOne = multiply(operandOne, operandTwo);
       upperScreen.innerHTML = `${operandOne} &#xd7; ${operandTwo} =`;
       displayResult();
       break;
