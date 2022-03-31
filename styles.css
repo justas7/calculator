@@ -15,10 +15,12 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #d2dfe1;
 }
 
 #calc-container {
   display: inline-flex;
+  width: 310px;
   flex-direction: column;
   outline: 3px solid black;
   margin: auto;
@@ -33,29 +35,73 @@ body {
   border-bottom: 3px solid black;
   text-align: end;
   font-size: 2rem;
+  background-color: #bddfe4;
 }
 
 #screenUpper {
   height: 40px;
+  font-size: 1.2rem;
+  padding-right: 10px;
+  padding-top: 5px;
+  outline: 1px solid black;
+  overflow: hidden;
 }
 
 #screenLower {
-  outline: inset;
+  overflow: hidden;
+  font-size: 2rem;
+  padding-top: 20px;
+  padding-right: 10px;
 }
 
 /* buttons */
+#numbers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 2px;
+  background-color: #bddfe4;
+}
 
 #deleteBtn-container {
   display: flex;
 }
+
 #deleteBtn,
 #clearBtn {
-  flex: 1;
   font-size: 2rem;
+  flex: 1;
+  background-color: #2c757f;
 }
 
 .button {
-  width: 100px;
+  width: 75px;
   height: 75px;
   font-size: 2rem;
+  border: none;
+}
+
+.btnsRow {
+  display: flex;
+  gap: 2px;
+}
+
+button[data-operator],
+button[data-dot],
+button[data-equal] {
+  background-color: #56bcc9;
+}
+
+button[data-number] {
+  background-color: #26dbf3;
+  border: 1px solid #cfedf1;
+}
+
+button[data-number]:active {
+  background-color: #3ee2f7;
+}
+button[data-operator]:active,
+button[data-dot]:active,
+button[data-equal]:active {
+  background-color: #59c5d3;
 }
