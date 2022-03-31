@@ -48,7 +48,8 @@ body {
 #deleteBtn-container {
   display: flex;
 }
-.deleteBtn {
+#deleteBtn,
+#clearBtn {
   flex: 1;
   font-size: 2rem;
 }
